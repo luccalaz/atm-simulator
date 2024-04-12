@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class Account {
+public abstract class Account implements Serializable {
     public final static byte SUCCESS = 1;
     public final static byte ERROR = 0;
 
@@ -46,6 +47,7 @@ public abstract class Account {
     }
 
     public String getTransactions() {
+        transactionReport = "";
         transactions.forEach(transaction -> {
             transactionReport = transactionReport + transaction.getTransaction() + "\n";
         });

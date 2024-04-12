@@ -2,70 +2,119 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
 public class Controller {
-    private Model model;
-    private MainMenu mainMenu;
-    private CreateAccount createAccount;
-    private ChangeAccount changeAccount;
-    private DeleteAccount deleteAccount;
-    private Deposit deposit;
-    private Withdraw withdraw;
+    Model model;
+    Window window;
+    MainMenu mainMenu;
+    CreateAccount createAccount;
+    ChangeAccount changeAccount;
+    DeleteAccount deleteAccount;
+    Deposit deposit;
+    Withdraw withdraw;
 
-    public Controller(Model myModel, View view) {
+    public Controller(Model myModel, Window myWindow, MainMenu myMainMenu, CreateAccount myCreateAccount, ChangeAccount myChangeAccount, DeleteAccount myDeleteAccount, Deposit myDeposit, Withdraw myWithdraw) {
         model = myModel;
+        window = myWindow;
+        mainMenu = myMainMenu;
+        createAccount = myCreateAccount;
+        changeAccount = myChangeAccount;
+        deleteAccount = myDeleteAccount;
+        deposit = myDeposit;
+        withdraw = myWithdraw;
 
         // set up main menu
-        mainMenu = new MainMenu();
         mainMenu.addChangeAccountListener((ActionEvent e) -> {
             changeAccount.setAccounts(model.getAccountNames());
-            view.switchPanel(changeAccount);
+            window.switchPanel(changeAccount);
         });
         mainMenu.addDeleteAccountListener((ActionEvent e) -> {
             deleteAccount.setAccountName(model.getSelectedAccount().getName());
-            view.switchPanel(deleteAccount);
+            window.switchPanel(deleteAccount);
         });
         mainMenu.addDepositListener((ActionEvent e) -> {
-            view.switchPanel(deposit);
+            window.switchPanel(deposit);
         });
         mainMenu.addWithdrawListener((ActionEvent e) -> {
-            view.switchPanel(withdraw);
+            window.switchPanel(withdraw);
         });
         mainMenu.addSaveListener((ActionEvent e) -> {
-            System.out.println("save");
+            model.save();
+            window.dispose();
         });
 
         // set up create account
-        createAccount = new CreateAccount();
         createAccount.addOkListener((ActionEvent e) -> {
-            model.accounts = new ArrayList<>();
-            System.out.println(model.accounts == null);
             if (createAccount.validateFields()) {
-                System.out.println("pass");
                 model.createAccount(createAccount.getAccountType(), createAccount.getAccountName(), createAccount.getInitialBalance());
-                createAccount.getCancelButton().setEnabled(true);
-                mainMenu.setAccountName(model.getSelectedAccount().getName());
-                mainMenu.setAccountBalance(model.getSelectedAccount().getBalance(), -1);
-                mainMenu.setTransactions(model.getSelectedAccount().getTransactions());
-                view.switchPanel(mainMenu);
+                createAccount.reset();
+                mainMenu.update();
+                window.switchPanel(mainMenu);
             }
         });
         createAccount.addCancelListener((ActionEvent e) -> {
-            view.switchPanel(mainMenu);
+            createAccount.reset();
+            window.switchPanel(mainMenu);
         });
 
-        changeAccount = new ChangeAccount();
+        changeAccount.addOkListener((ActionEvent e) -> {
+            model.selectAccount(changeAccount.getSelectedAccount());
+            mainMenu.update();
+            window.switchPanel(mainMenu);
+        });
         changeAccount.addCancelListener((ActionEvent e) -> {
-            System.out.println("cancel");
-            view.switchPanel(mainMenu);
+            window.switchPanel(mainMenu);
         });
-        deleteAccount = new DeleteAccount();
-        deposit = new Deposit();
-        withdraw = new Withdraw();
+        changeAccount.addCreateAccountListener((ActionEvent e) -> {
+            window.switchPanel(createAccount);
+        });
 
-        if (model.load() == Model.ERROR) {
+        deleteAccount.addYesListener((ActionEvent e) -> {
+            model.deleteAccount();
+            if (model.getAccountNames().length == 0) {
+                createAccount.getCancelButton().setEnabled(false);
+                window.switchPanel(createAccount);
+            } else {
+                mainMenu.update();
+                window.switchPanel(mainMenu);
+            }
+        });
+        deleteAccount.addNoListener((ActionEvent e) -> {
+            window.switchPanel(mainMenu);
+        });
+
+        deposit.addOkListener((ActionEvent e) -> {
+            if (deposit.validateFields()) {
+                model.getSelectedAccount().deposit(deposit.getAmount(), deposit.getDescription());
+                deposit.reset();
+                mainMenu.update();
+                window.switchPanel(mainMenu);
+            }
+        });
+        deposit.addCancelListener((ActionEvent e) -> {
+            deposit.reset();
+            window.switchPanel(mainMenu);
+        });
+
+        withdraw.addOkListener((ActionEvent e) -> {
+            if (withdraw.validateFields()) {
+                model.getSelectedAccount().withdraw(withdraw.getAmount(), withdraw.getDescription());
+                withdraw.reset();
+                mainMenu.update();
+                window.switchPanel(mainMenu);
+            }
+        });
+        withdraw.addCancelListener((ActionEvent e) -> {
+            withdraw.reset();
+            window.switchPanel(mainMenu);
+        });
+
+        model.load();
+
+        if (model.getAccountNames().length == 0) {
             createAccount.getCancelButton().setEnabled(false);
-            view.switchPanel(createAccount);
+            window.switchPanel(createAccount);
         } else {
-            view.switchPanel(mainMenu);
+            mainMenu.update();
+            window.switchPanel(mainMenu);
         }
     }
 }

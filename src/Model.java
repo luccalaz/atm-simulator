@@ -14,6 +14,7 @@ public class Model {
     private int selectedAccount;
 
     public Model() {
+        accounts = new ArrayList<>();
     }
 
     public Account getSelectedAccount() {
@@ -37,7 +38,7 @@ public class Model {
             accounts.add(new SavingsAccount(name, initialDeposit, SAVINGS_ACCOUNT_FEE));
         }
         if (accountType == AIRMILES_SAVINGS_ACCOUNT) {
-            accounts.add(new SavingsAccount(name, initialDeposit, AIRMILES_SAVINGS_ACCOUNT_FEE));
+            accounts.add(new AirmilesSavingsAccount(name, initialDeposit, AIRMILES_SAVINGS_ACCOUNT_FEE));
         }
         selectedAccount = accounts.size() - 1;
     }
@@ -57,6 +58,7 @@ public class Model {
         if (accounts != null) {
             return SUCCESS;
         } else {
+            accounts = new ArrayList<>();
             return ERROR;
         }
     }

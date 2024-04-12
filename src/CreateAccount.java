@@ -6,6 +6,7 @@ import javax.swing.*;
 import net.miginfocom.swing.MigLayout;
 
 public class CreateAccount extends JPanel {
+    private Model model;
     private JLabel pageLabel;
     private JLabel accountNameLabel;
     private JTextField accountNameText;
@@ -16,7 +17,11 @@ public class CreateAccount extends JPanel {
     private JButton okButton;
     private JButton cancelButton;
 
-    public CreateAccount() {
+    TextFieldValidator accountNameCheck;
+    TextFieldValidator initialBalanceCheck;
+
+    public CreateAccount(Model myModel) {
+        model = myModel;
         setLayout(new MigLayout("", "[][]", "[]10[][]10[][]10[][]20[]"));
 
         // Page label
@@ -53,8 +58,12 @@ public class CreateAccount extends JPanel {
     }
 
     public boolean validateFields() {
-        TextFieldValidator accountNameCheck = new TextFieldValidator(accountNameText, "^[A-Za-z ]{1,27}$", Color.RED);
-        TextFieldValidator initialBalanceCheck = new TextFieldValidator(initialBalanceText, "^(?!0+(\\.00?)?$)\\d+(\\.\\d{1,2})?$", Color.RED);
+        accountNameCheck = new TextFieldValidator(accountNameText, "^[A-Za-z ]{1,20}$", Color.RED);
+        initialBalanceCheck = new TextFieldValidator(initialBalanceText, "^(?!0+(\\.00?)?$)\\d+(\\.\\d{1,2})?$", Color.RED);
+        accountNameCheck.reset();
+        accountNameCheck.check();
+        initialBalanceCheck.reset();
+        initialBalanceCheck.check();
         return accountNameCheck.check() && initialBalanceCheck.check();
     }
 
@@ -72,6 +81,13 @@ public class CreateAccount extends JPanel {
 
     public JButton getCancelButton() {
         return cancelButton;
+    }
+
+    public void reset() {
+        accountNameText.setText("");
+        initialBalanceText.setText("");
+        accountTypeDropdown.setSelectedIndex(0);
+        cancelButton.setEnabled(true);
     }
 
     public void addOkListener(ActionListener okListener) {

@@ -6,6 +6,7 @@ import javax.swing.*;
 import net.miginfocom.swing.MigLayout;
 
 public class MainMenu extends JPanel {
+    private Model model;
     private JLabel selectedAccountLabel;
     private JLabel accountBalanceLabel;
     private JScrollPane transactionsScroll;
@@ -16,7 +17,8 @@ public class MainMenu extends JPanel {
     private JButton withdrawButton;
     private JButton saveAndQuitButton;
 
-    public MainMenu() {
+    public MainMenu(Model myModel) {
+        model = myModel;
         setLayout(new MigLayout("", "[grow][grow]", "[]20[]20[][][]"));
 
         // Account info
@@ -52,20 +54,20 @@ public class MainMenu extends JPanel {
         transactionsArea.setText("No transactions yet.");
     }
 
-    public void setAccountName(String name) {
-        selectedAccountLabel.setText(name);
-    }
+    public void update() {
+        selectedAccountLabel.setText(model.getSelectedAccount().getName());
 
-    public void setAccountBalance(double balance, int airmiles) {
-        if (airmiles == -1) {
-            accountBalanceLabel.setText("$" + balance);
-        } else {
-            accountBalanceLabel.setText("Airmiles: " + airmiles + "  |  $" + balance);
+        if (model.getSelectedAccount() instanceof SavingsAccount) {
+            System.out.println("Savings");
+            accountBalanceLabel.setText("$" + String.format("%.2f", model.getSelectedAccount().getBalance()));
+        } else if (model.getSelectedAccount() instanceof AirmilesSavingsAccount) {
+            System.out.println("Airmiles");
+            AirmilesSavingsAccount selectedAccount = (AirmilesSavingsAccount) model.getSelectedAccount();
+            accountBalanceLabel.setText("Airmiles: " + selectedAccount.getAirmiles() + "  |  $" + String.format("%.2f", model.getSelectedAccount().getBalance()));
         }
-    }
 
-    public void setTransactions(String transactions) {
-        transactionsArea.setText(transactions);
+        transactionsArea.setText(model.getSelectedAccount().getTransactions());
+        if (model.getSelectedAccount().getTransactions().length() == 0) transactionsArea.setText("No transactions yet.");
     }
 
     public void addChangeAccountListener(ActionListener changeAccountListener) {

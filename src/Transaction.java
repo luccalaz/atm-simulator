@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Transaction {
+public class Transaction implements Serializable {
     private String description;
     private double amount;
     private Date timestamp;
@@ -16,7 +17,7 @@ public class Transaction {
 
     public String getTransaction() {
         String dateTime = dateFormat.format(timestamp);
-        String transaction = dateTime + ": $" + amount + " [" + description + "]";
+        String transaction = dateTime + ": $" + String.format("%.2f", amount) + " [" + description + "]";
         return transaction;
     }
 }

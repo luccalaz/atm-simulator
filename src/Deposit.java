@@ -6,6 +6,7 @@ import javax.swing.*;
 import net.miginfocom.swing.MigLayout;
 
 public class Deposit extends JPanel {
+    private Model model;
     private JLabel pageLabel;
     private JLabel amountLabel;
     private JTextField amountText;
@@ -14,7 +15,8 @@ public class Deposit extends JPanel {
     private JButton okButton;
     private JButton cancelButton;
 
-    public Deposit() {
+    public Deposit(Model myModel) {
+        model = myModel;
         setLayout(new MigLayout("", "[][]", "[]10[][]10[][]20[]"));
 
         // Page label
@@ -43,11 +45,27 @@ public class Deposit extends JPanel {
         add(cancelButton, "cell 1 6, split 2");
     }
 
-    public void validateFields() {
+    public boolean validateFields() {
         TextFieldValidator amountCheck = new TextFieldValidator(amountText, "^(?!0+(\\.00?)?$)\\d+(\\.\\d{1,2})?$", Color.RED);
         TextFieldValidator descriptionCheck = new TextFieldValidator(descriptionText, "^[A-Za-z ]{1,27}$", Color.RED);
+        amountCheck.reset();
         amountCheck.check();
+        descriptionCheck.reset();
         descriptionCheck.check();
+        return amountCheck.check() && descriptionCheck.check();
+    }
+
+    public void reset() {
+        amountText.setText("");
+        descriptionText.setText("");
+    }
+
+    public double getAmount() {
+        return Double.parseDouble(amountText.getText());
+    }
+
+    public String getDescription() {
+        return descriptionText.getText();
     }
 
     public void addOkListener(ActionListener okListener) {
@@ -55,6 +73,6 @@ public class Deposit extends JPanel {
     }
     
     public void addCancelListener(ActionListener cancelListener) {
-        okButton.addActionListener(cancelListener);
+        cancelButton.addActionListener(cancelListener);
     }
 }

@@ -5,12 +5,14 @@ import javax.swing.*;
 import net.miginfocom.swing.MigLayout;
 
 public class DeleteAccount extends JPanel {
+    private Model model;
     private JLabel pageLabel;
     private JLabel questionLabel;
     private JButton yesButton;
     private JButton noButton;
 
-    public DeleteAccount() {
+    public DeleteAccount(Model myModel) {
+        model = myModel;
         setLayout(new MigLayout("", "[][]", "[]10[][]"));
 
         // Page label
