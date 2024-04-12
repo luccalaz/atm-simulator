@@ -52,11 +52,26 @@ public class CreateAccount extends JPanel {
         add(cancelButton, "cell 1 7, split 2");
     }
 
-    public void validateFields() {
+    public boolean validateFields() {
         TextFieldValidator accountNameCheck = new TextFieldValidator(accountNameText, "^[A-Za-z ]{1,27}$", Color.RED);
         TextFieldValidator initialBalanceCheck = new TextFieldValidator(initialBalanceText, "^(?!0+(\\.00?)?$)\\d+(\\.\\d{1,2})?$", Color.RED);
-        accountNameCheck.check();
-        initialBalanceCheck.check();
+        return accountNameCheck.check() && initialBalanceCheck.check();
+    }
+
+    public String getAccountName() {
+        return accountNameText.getText();
+    }
+
+    public double getInitialBalance() {
+        return Double.parseDouble(initialBalanceText.getText());
+    }
+
+    public byte getAccountType() {
+        return (byte) accountTypeDropdown.getSelectedIndex();
+    }
+
+    public JButton getCancelButton() {
+        return cancelButton;
     }
 
     public void addOkListener(ActionListener okListener) {
@@ -64,6 +79,6 @@ public class CreateAccount extends JPanel {
     }
     
     public void addCancelListener(ActionListener cancelListener) {
-        okButton.addActionListener(cancelListener);
+        cancelButton.addActionListener(cancelListener);
     }
 }

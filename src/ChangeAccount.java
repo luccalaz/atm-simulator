@@ -11,7 +11,7 @@ public class ChangeAccount extends JPanel {
     private JButton okButton;
     private JButton cancelButton;
 
-    public ChangeAccount(String[] accountNames) {
+    public ChangeAccount() {
         setLayout(new MigLayout("", "[][]", "[]10[][]20[]"));
 
         // Page label
@@ -20,7 +20,7 @@ public class ChangeAccount extends JPanel {
 
         // Account selection
         accountSelectLabel = new JLabel("Select account:");
-        accountSelectDropdown = new JComboBox<>(accountNames);
+        accountSelectDropdown = new JComboBox<>();
 
         // Buttons
         okButton = new JButton("OK");
@@ -34,11 +34,17 @@ public class ChangeAccount extends JPanel {
         add(cancelButton, "cell 1 3, split 2");
     }
 
+    public void setAccounts(String[] accounts) {
+        for (String account: accounts) {
+            accountSelectDropdown.addItem(account);
+        }
+    }
+
     public void addOkListener(ActionListener okListener) {
         okButton.addActionListener(okListener);
     }
     
     public void addCancelListener(ActionListener cancelListener) {
-        okButton.addActionListener(cancelListener);
+        cancelButton.addActionListener(cancelListener);
     }
 }

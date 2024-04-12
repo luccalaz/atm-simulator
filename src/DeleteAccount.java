@@ -10,7 +10,7 @@ public class DeleteAccount extends JPanel {
     private JButton yesButton;
     private JButton noButton;
 
-    public DeleteAccount(String accountName) {
+    public DeleteAccount() {
         setLayout(new MigLayout("", "[][]", "[]10[][]"));
 
         // Page label
@@ -18,7 +18,7 @@ public class DeleteAccount extends JPanel {
         pageLabel.setFont(new Font("Arial", Font.BOLD, 15));
 
         // Delete question
-        questionLabel = new JLabel("Delete " + accountName + "?");
+        questionLabel = new JLabel("");
 
         // Buttons
         yesButton = new JButton("Yes");
@@ -29,6 +29,10 @@ public class DeleteAccount extends JPanel {
         add(questionLabel, "cell 0 1");
         add(yesButton, "cell 0 2, split");
         add(noButton, "cell 1 3, split 2");
+    }
+
+    public void setAccountName(String name) {
+        questionLabel.setText("Delete " + name + "?");
     }
 
     public void addYesListener(ActionListener yesListener) {

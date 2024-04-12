@@ -4,14 +4,14 @@ public abstract class Account {
     public final static byte SUCCESS = 1;
     public final static byte ERROR = 0;
 
-    private String description;
+    private String name;
     private double balance;
     private double fee;
     private String transactionReport;
     private ArrayList<Transaction> transactions;
 
-    public Account(String desc, double initialDeposit, double accountFee) {
-        description = desc;
+    public Account(String accountName, double initialDeposit, double accountFee) {
+        name = accountName;
         balance = initialDeposit;
         fee = accountFee;
         transactionReport = "";
@@ -41,8 +41,8 @@ public abstract class Account {
         return balance;
     }
 
-    public String getDescription() {
-        return description;
+    public String getName() {
+        return name;
     }
 
     public String getTransactions() {

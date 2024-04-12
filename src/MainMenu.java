@@ -73,18 +73,18 @@ public class MainMenu extends JPanel {
     }
 
     public void addDeleteAccountListener(ActionListener deleteAccountListener) {
-        changeAccountButton.addActionListener(deleteAccountListener);
+        deleteAccountButton.addActionListener(deleteAccountListener);
     }
 
     public void addDepositListener(ActionListener depositListener) {
-        changeAccountButton.addActionListener(depositListener);
+        depositButton.addActionListener(depositListener);
     }
 
     public void addWithdrawListener(ActionListener withdrawListener) {
-        changeAccountButton.addActionListener(withdrawListener);
+        withdrawButton.addActionListener(withdrawListener);
     }
 
     public void addSaveListener(ActionListener saveListener) {
-        changeAccountButton.addActionListener(saveListener);
+        saveAndQuitButton.addActionListener(saveListener);
     }
 }

@@ -15,7 +15,9 @@ public class View extends JFrame {
     }
 
     public void switchPanel(JPanel panel) {
-        this.removeAll();
-        this.add(panel);
+        getContentPane().removeAll();
+        getContentPane().add(panel);
+        getContentPane().revalidate();
+        getContentPane().repaint();  
     }
 }

@@ -18,8 +18,8 @@ public class TextFieldValidator {
      * @param myTarget     The target JTextField to be validated.
      * @param myErrorColor The color to be set for displaying error indication.
      */
-    public TextFieldValidator(JTextField myTarget, String regExp, Color myErrorColor) {
-        regExp = "^[0-9]$"; // Default regular expression for numeric input
+    public TextFieldValidator(JTextField myTarget, String regex, Color myErrorColor) {
+        regExp = regex; // Default regular expression for numeric input
         errorColor = myErrorColor;
         txtField = myTarget;
     }

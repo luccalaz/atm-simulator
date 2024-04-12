@@ -7,26 +7,38 @@ public class Model {
     public final static double SAVINGS_ACCOUNT_FEE = 0.5;
     public final static double AIRMILES_SAVINGS_ACCOUNT_FEE = 0.75;
 
-    private ArrayList<Account> accounts;
+    public final static byte ERROR = 0;
+    public final static byte SUCCESS = 1;
+
+    public ArrayList<Account> accounts;
     private int selectedAccount;
 
-    @SuppressWarnings("unchecked")
     public Model() {
-        accounts = (ArrayList<Account>) FileManager.getInstance().load("saveData.dat");
-        if (accounts == null) accounts = new ArrayList<>();
-    }
-
-    public void selectAccount(int index) {
-        selectedAccount = index;
     }
 
     public Account getSelectedAccount() {
         return accounts.get(selectedAccount);
     }
 
-    public void createAccount(byte accountType, String description, double initialDeposit) {
-        if (accountType == SAVINGS_ACCOUNT) accounts.add(new SavingsAccount(description, initialDeposit, SAVINGS_ACCOUNT_FEE));
-        if (accountType == AIRMILES_SAVINGS_ACCOUNT) accounts.add(new SavingsAccount(description, initialDeposit, AIRMILES_SAVINGS_ACCOUNT_FEE));
+    public String[] getAccountNames() {
+        ArrayList<String> accountNames = new ArrayList<>();
+        accounts.forEach(account -> {
+            accountNames.add(account.getName());
+        });
+        return accountNames.toArray(new String[accountNames.size()]);
+    }
+
+    public void selectAccount(int index) {
+        selectedAccount = index;
+    }
+
+    public void createAccount(byte accountType, String name, double initialDeposit) {
+        if (accountType == SAVINGS_ACCOUNT) {
+            accounts.add(new SavingsAccount(name, initialDeposit, SAVINGS_ACCOUNT_FEE));
+        }
+        if (accountType == AIRMILES_SAVINGS_ACCOUNT) {
+            accounts.add(new SavingsAccount(name, initialDeposit, AIRMILES_SAVINGS_ACCOUNT_FEE));
+        }
         selectedAccount = accounts.size() - 1;
     }
 
@@ -37,5 +49,15 @@ public class Model {
 
     public void save() {
         FileManager.getInstance().save("saveData.dat", accounts);
+    }
+
+    @SuppressWarnings("unchecked")
+    public byte load() {
+        accounts = (ArrayList<Account>) FileManager.getInstance().load("saveData.dat");
+        if (accounts != null) {
+            return SUCCESS;
+        } else {
+            return ERROR;
+        }
     }
 }
