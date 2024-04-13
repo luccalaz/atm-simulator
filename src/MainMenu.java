@@ -22,9 +22,9 @@ public class MainMenu extends JPanel {
         setLayout(new MigLayout("", "[grow][grow]", "[]20[]20[][][]"));
 
         // Account info
-        selectedAccountLabel = new JLabel("Savings Account");
+        selectedAccountLabel = new JLabel("Account Name");
         selectedAccountLabel.setFont(new Font("Arial", Font.BOLD, 15));
-        accountBalanceLabel = new JLabel("Airmiles: 10  |  $0,00");
+        accountBalanceLabel = new JLabel("0  |  $0,00");
         accountBalanceLabel.setFont(new Font("Arial", Font.BOLD, 15));
 
         // Transactions
@@ -42,28 +42,24 @@ public class MainMenu extends JPanel {
         saveAndQuitButton = new JButton("Save & Quit");
 
         // Layout
-        add(selectedAccountLabel, "cell 0 0");
-        add(accountBalanceLabel, "cell 1 0, alignx right");
+        add(selectedAccountLabel, "cell 0 0, span 2");
+        add(accountBalanceLabel, "cell 1 0, span 2, alignx right");
         add(transactionsScroll, "cell 0 1, height 200, span, grow");
-        add(changeAccountButton, "cell 0 2, width 200, alignx center");
-        add(deleteAccountButton, "cell 0 3, width 200, alignx center");
-        add(depositButton, "cell 1 2, width 200, alignx center");
-        add(withdrawButton, "cell 1 3, width 200, alignx center");
+        add(changeAccountButton, "cell 0 2, width 250, alignx center");
+        add(deleteAccountButton, "cell 0 3, width 250, alignx center");
+        add(depositButton, "cell 1 2, width 250, alignx center");
+        add(withdrawButton, "cell 1 3, width 250, alignx center");
         add(saveAndQuitButton, "cell 0 4, span, width 400, alignx center");
-
-        transactionsArea.setText("No transactions yet.");
     }
 
     public void update() {
         selectedAccountLabel.setText(model.getSelectedAccount().getName());
 
         if (model.getSelectedAccount() instanceof SavingsAccount) {
-            System.out.println("Savings");
-            accountBalanceLabel.setText("$" + String.format("%.2f", model.getSelectedAccount().getBalance()));
+            accountBalanceLabel.setText("$" + String.format("%,.2f", model.getSelectedAccount().getBalance()));
         } else if (model.getSelectedAccount() instanceof AirmilesSavingsAccount) {
-            System.out.println("Airmiles");
             AirmilesSavingsAccount selectedAccount = (AirmilesSavingsAccount) model.getSelectedAccount();
-            accountBalanceLabel.setText("Airmiles: " + selectedAccount.getAirmiles() + "  |  $" + String.format("%.2f", model.getSelectedAccount().getBalance()));
+            accountBalanceLabel.setText(String.format("%,d", selectedAccount.getAirmiles()) + "  |  $" + String.format("%,.2f", model.getSelectedAccount().getBalance()));
         }
 
         transactionsArea.setText(model.getSelectedAccount().getTransactions());

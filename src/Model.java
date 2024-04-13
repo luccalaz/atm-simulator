@@ -10,7 +10,7 @@ public class Model {
     public final static byte ERROR = 0;
     public final static byte SUCCESS = 1;
 
-    public ArrayList<Account> accounts;
+    private ArrayList<Account> accounts;
     private int selectedAccount;
 
     public Model() {
@@ -53,13 +53,8 @@ public class Model {
     }
 
     @SuppressWarnings("unchecked")
-    public byte load() {
+    public void load() {
         accounts = (ArrayList<Account>) FileManager.getInstance().load("saveData.dat");
-        if (accounts != null) {
-            return SUCCESS;
-        } else {
-            accounts = new ArrayList<>();
-            return ERROR;
-        }
+        if (accounts == null) accounts = new ArrayList<>();
     }
 }

@@ -15,6 +15,9 @@ public class Deposit extends JPanel {
     private JButton okButton;
     private JButton cancelButton;
 
+    private TextFieldValidator amountCheck;
+    private TextFieldValidator descriptionCheck;
+
     public Deposit(Model myModel) {
         model = myModel;
         setLayout(new MigLayout("", "[][]", "[]10[][]10[][]20[]"));
@@ -43,11 +46,13 @@ public class Deposit extends JPanel {
         add(descriptionText, "cell 0 4");
         add(okButton, "cell 0 5, split");
         add(cancelButton, "cell 1 6, split 2");
+
+        // initialize validators
+        amountCheck = new TextFieldValidator(amountText, "^(?!0+(\\.00?)?$)\\d+(\\.\\d{1,2})?$", Color.RED);
+        descriptionCheck = new TextFieldValidator(descriptionText, "^[A-Za-z ]{1,27}$", Color.RED);
     }
 
     public boolean validateFields() {
-        TextFieldValidator amountCheck = new TextFieldValidator(amountText, "^(?!0+(\\.00?)?$)\\d+(\\.\\d{1,2})?$", Color.RED);
-        TextFieldValidator descriptionCheck = new TextFieldValidator(descriptionText, "^[A-Za-z ]{1,27}$", Color.RED);
         amountCheck.reset();
         amountCheck.check();
         descriptionCheck.reset();
@@ -56,6 +61,8 @@ public class Deposit extends JPanel {
     }
 
     public void reset() {
+        amountCheck.reset();
+        descriptionCheck.reset();
         amountText.setText("");
         descriptionText.setText("");
     }

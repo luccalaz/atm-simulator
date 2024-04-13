@@ -1,5 +1,4 @@
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
 
 public class Controller {
     Model model;
@@ -55,6 +54,7 @@ public class Controller {
             window.switchPanel(mainMenu);
         });
 
+         // set up change account
         changeAccount.addOkListener((ActionEvent e) -> {
             model.selectAccount(changeAccount.getSelectedAccount());
             mainMenu.update();
@@ -67,6 +67,7 @@ public class Controller {
             window.switchPanel(createAccount);
         });
 
+         // set up delete account
         deleteAccount.addYesListener((ActionEvent e) -> {
             model.deleteAccount();
             if (model.getAccountNames().length == 0) {
@@ -81,6 +82,7 @@ public class Controller {
             window.switchPanel(mainMenu);
         });
 
+         // set up deposit
         deposit.addOkListener((ActionEvent e) -> {
             if (deposit.validateFields()) {
                 model.getSelectedAccount().deposit(deposit.getAmount(), deposit.getDescription());
@@ -94,6 +96,7 @@ public class Controller {
             window.switchPanel(mainMenu);
         });
 
+         // set up withdraw
         withdraw.addOkListener((ActionEvent e) -> {
             if (withdraw.validateFields()) {
                 model.getSelectedAccount().withdraw(withdraw.getAmount(), withdraw.getDescription());
@@ -107,8 +110,10 @@ public class Controller {
             window.switchPanel(mainMenu);
         });
 
+        // try loading data
         model.load();
 
+        // if no accounts, create account
         if (model.getAccountNames().length == 0) {
             createAccount.getCancelButton().setEnabled(false);
             window.switchPanel(createAccount);

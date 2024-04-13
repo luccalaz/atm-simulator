@@ -17,7 +17,7 @@ public class Transaction implements Serializable {
 
     public String getTransaction() {
         String dateTime = dateFormat.format(timestamp);
-        String transaction = dateTime + ": $" + String.format("%.2f", amount) + " [" + description + "]";
+        String transaction = dateTime + ": $" + String.format("%,.2f", amount) + " [" + description + "]";
         return transaction;
     }
 }
