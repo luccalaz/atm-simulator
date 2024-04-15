@@ -14,6 +14,7 @@ public class CreateAccount extends JPanel {
     private JComboBox<String> accountTypeDropdown;
     private JLabel initialBalanceLabel;
     private JTextField initialBalanceText;
+    private JLabel errorLabel;
     private JButton okButton;
     private JButton cancelButton;
 
@@ -22,7 +23,7 @@ public class CreateAccount extends JPanel {
 
     public CreateAccount(Model myModel) {
         model = myModel;
-        setLayout(new MigLayout("", "[][]", "[]10[][]10[][]10[][]20[]"));
+        setLayout(new MigLayout("", "[][]", "[]10[][]10[][]10[][]10[][]"));
 
         // Page label
         pageLabel = new JLabel("Create Account");
@@ -41,6 +42,10 @@ public class CreateAccount extends JPanel {
         accountTypeLabel = new JLabel("Account type:");
         accountTypeDropdown = new JComboBox<>(accountTypes);
 
+        // Error label
+        errorLabel = new JLabel(" ");
+        errorLabel.setForeground(Color.RED);
+
         // Buttons
         okButton = new JButton("OK");
         cancelButton = new JButton("Cancel");
@@ -53,8 +58,9 @@ public class CreateAccount extends JPanel {
         add(initialBalanceText, "cell 0 4");
         add(accountTypeLabel, "cell 0 5");
         add(accountTypeDropdown, "cell 0 6");
-        add(okButton, "cell 0 7, split");
-        add(cancelButton, "cell 1 7, split 2");
+        add(errorLabel, "cell 0 7");
+        add(okButton, "cell 0 8, split");
+        add(cancelButton, "cell 1 8, split 2");
 
         // Initialize validators
         accountNameCheck = new TextFieldValidator(accountNameText, "^[A-Za-z ]{1,20}$", Color.RED);
@@ -63,9 +69,11 @@ public class CreateAccount extends JPanel {
 
     public boolean validateFields() {
         accountNameCheck.reset();
-        accountNameCheck.check();
         initialBalanceCheck.reset();
-        initialBalanceCheck.check();
+        errorLabel.setText(" ");
+        if (!accountNameCheck.check()) errorLabel.setText("Invalid account name.");
+        if (!initialBalanceCheck.check()) errorLabel.setText("Invalid initial balance.");
+        if (!accountNameCheck.check() && !initialBalanceCheck.check()) errorLabel.setText("Invalid input.");
         return accountNameCheck.check() && initialBalanceCheck.check();
     }
 
@@ -86,6 +94,7 @@ public class CreateAccount extends JPanel {
     }
 
     public void reset() {
+        errorLabel.setText(" ");
         accountNameCheck.reset();
         initialBalanceCheck.reset();
         accountNameText.setText("");

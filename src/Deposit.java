@@ -12,6 +12,7 @@ public class Deposit extends JPanel {
     private JTextField amountText;
     private JLabel descriptionLabel;
     private JTextField descriptionText;
+    private JLabel errorLabel;
     private JButton okButton;
     private JButton cancelButton;
 
@@ -20,7 +21,7 @@ public class Deposit extends JPanel {
 
     public Deposit(Model myModel) {
         model = myModel;
-        setLayout(new MigLayout("", "[][]", "[]10[][]10[][]20[]"));
+        setLayout(new MigLayout("", "[][]", "[]10[][]10[][]10[][]"));
 
         // Page label
         pageLabel = new JLabel("Deposit");
@@ -38,13 +39,18 @@ public class Deposit extends JPanel {
         okButton = new JButton("OK");
         cancelButton = new JButton("Cancel");
 
+        // Error label
+        errorLabel = new JLabel(" ");
+        errorLabel.setForeground(Color.RED);
+
         // Layout
         add(pageLabel, "cell 0 0");
         add(amountLabel, "cell 0 1");
         add(amountText, "cell 0 2");
         add(descriptionLabel, "cell 0 3");
         add(descriptionText, "cell 0 4");
-        add(okButton, "cell 0 5, split");
+        add(errorLabel, "cell 0 5");
+        add(okButton, "cell 0 6, split");
         add(cancelButton, "cell 1 6, split 2");
 
         // initialize validators
@@ -53,14 +59,17 @@ public class Deposit extends JPanel {
     }
 
     public boolean validateFields() {
+        errorLabel.setText(" ");
         amountCheck.reset();
-        amountCheck.check();
         descriptionCheck.reset();
-        descriptionCheck.check();
+        if (!amountCheck.check()) errorLabel.setText("Invalid amount.");
+        if (!descriptionCheck.check()) errorLabel.setText("Invalid description.");
+        if (!amountCheck.check() && !descriptionCheck.check()) errorLabel.setText("Invalid input.");
         return amountCheck.check() && descriptionCheck.check();
     }
 
     public void reset() {
+        errorLabel.setText(" ");
         amountCheck.reset();
         descriptionCheck.reset();
         amountText.setText("");
