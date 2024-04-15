@@ -1,3 +1,4 @@
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 
@@ -26,7 +27,7 @@ public class ChangeAccount extends JPanel {
         // Account selection
         accountSelectLabel = new JLabel("Select account:");
         accountSelectDropdown = new JComboBox<>();
-        accountSelectDropdown.setSize(100, 0);
+        accountSelectDropdown.setPreferredSize(new Dimension(207, 25));
 
         // Buttons
         createAccountButton = new JButton("Create New Account");
