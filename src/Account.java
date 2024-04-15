@@ -50,7 +50,7 @@ public abstract class Account implements Serializable {
 
     public byte withdraw(double amount, String description) {
         amount += fee;
-        if (balance - amount > 0) {
+        if (balance - amount >= 0) {
             balance -= amount;
             transactions.add(new Transaction(description, amount * -1));
             return SUCCESS;

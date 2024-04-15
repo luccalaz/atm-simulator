@@ -68,15 +68,22 @@ public class Withdraw extends JPanel {
         return descriptionText.getText();
     }
 
+    public void setErrorLabelTxt(String error) {
+        amountText.setBorder(BorderFactory.createLineBorder(Color.RED));
+        errorLabel.setText(error);
+    }
+
     // ------------------------------------------------------------ public methods
     public boolean validateFields() {
         errorLabel.setText(" ");
         amountCheck.reset();
         descriptionCheck.reset();
-        if (!amountCheck.check()) errorLabel.setText("Invalid amount.");
-        if (!descriptionCheck.check()) errorLabel.setText("Invalid description.");
-        if (!amountCheck.check() && !descriptionCheck.check()) errorLabel.setText("Invalid input.");
-        return amountCheck.check() && descriptionCheck.check();
+        boolean amtCheck = amountCheck.check();
+        boolean descCheck = descriptionCheck.check();
+        if (!amtCheck) errorLabel.setText("Invalid amount.");
+        if (!descCheck) errorLabel.setText("Invalid description.");
+        if (!amtCheck && !descCheck) errorLabel.setText("Invalid input.");
+        return amtCheck && descCheck;
     }
 
     public void reset() {

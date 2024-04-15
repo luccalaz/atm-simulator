@@ -102,10 +102,14 @@ public class Controller {
         // set up withdraw
         withdraw.addOkListener((ActionEvent e) -> {
             if (withdraw.validateFields()) {
-                model.getSelectedAccount().withdraw(withdraw.getAmount(), withdraw.getDescription());
-                withdraw.reset();
-                mainMenu.update();
-                window.switchPanel(mainMenu);
+                byte transaction = model.getSelectedAccount().withdraw(withdraw.getAmount(), withdraw.getDescription());
+                if (transaction == Model.SUCCESS) {
+                    withdraw.reset();
+                    mainMenu.update();
+                    window.switchPanel(mainMenu);
+                } else {
+                    withdraw.setErrorLabelTxt("Insufficient balance.");
+                }
             }
         });
         withdraw.addCancelListener((ActionEvent e) -> {
