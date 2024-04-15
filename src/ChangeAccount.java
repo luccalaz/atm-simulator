@@ -5,6 +5,7 @@ import javax.swing.*;
 import net.miginfocom.swing.MigLayout;
 
 public class ChangeAccount extends JPanel {
+    // ------------------------------------------------------------ variable initialization
     private Model model;
     private JLabel pageLabel;
     private JLabel accountSelectLabel;
@@ -13,6 +14,7 @@ public class ChangeAccount extends JPanel {
     private JButton okButton;
     private JButton cancelButton;
 
+    // ------------------------------------------------------------ constructor method
     public ChangeAccount(Model myModel) {
         model = myModel;
         setLayout(new MigLayout("", "[][]", "[]10[][]10[][]"));
@@ -40,6 +42,7 @@ public class ChangeAccount extends JPanel {
         add(cancelButton, "cell 1 4, width 100, split 2");
     }
 
+    // ------------------------------------------------------------ gets/sets
     public void setAccounts(String[] accounts) {
         accountSelectDropdown.removeAllItems();
         for (String account: accounts) {
@@ -51,6 +54,7 @@ public class ChangeAccount extends JPanel {
         return accountSelectDropdown.getSelectedIndex();
     }
 
+    // ------------------------------------------------------------ public methods
     public void addCreateAccountListener(ActionListener createAccountListener) {
         createAccountButton.addActionListener(createAccountListener);
     }

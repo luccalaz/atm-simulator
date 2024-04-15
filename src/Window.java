@@ -1,6 +1,7 @@
 import javax.swing.*;
 
 public class Window extends JFrame {
+    // ------------------------------------------------------------ constructor method
     public Window() {
         // Set up JFrame
         setTitle("ATM Simulator");
@@ -10,6 +11,7 @@ public class Window extends JFrame {
         setVisible(true);
     }
 
+    // ------------------------------------------------------------ public methods
     public void switchPanel(JPanel panel) {
         getContentPane().removeAll();
         getContentPane().add(panel);

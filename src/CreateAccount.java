@@ -1,11 +1,11 @@
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionListener;
-
 import javax.swing.*;
 import net.miginfocom.swing.MigLayout;
 
 public class CreateAccount extends JPanel {
+    // ------------------------------------------------------------ variable initialization
     private Model model;
     private JLabel pageLabel;
     private JLabel accountNameLabel;
@@ -17,10 +17,10 @@ public class CreateAccount extends JPanel {
     private JLabel errorLabel;
     private JButton okButton;
     private JButton cancelButton;
+    private TextFieldValidator accountNameCheck;
+    private TextFieldValidator initialBalanceCheck;
 
-    TextFieldValidator accountNameCheck;
-    TextFieldValidator initialBalanceCheck;
-
+    // ------------------------------------------------------------ constructor method
     public CreateAccount(Model myModel) {
         model = myModel;
         setLayout(new MigLayout("", "[][]", "[]10[][]10[][]10[][]10[][]"));
@@ -67,16 +67,7 @@ public class CreateAccount extends JPanel {
         initialBalanceCheck = new TextFieldValidator(initialBalanceText, "^(?!0+(\\.00?)?$)\\d+(\\.\\d{1,2})?$", Color.RED);
     }
 
-    public boolean validateFields() {
-        accountNameCheck.reset();
-        initialBalanceCheck.reset();
-        errorLabel.setText(" ");
-        if (!accountNameCheck.check()) errorLabel.setText("Invalid account name.");
-        if (!initialBalanceCheck.check()) errorLabel.setText("Invalid initial balance.");
-        if (!accountNameCheck.check() && !initialBalanceCheck.check()) errorLabel.setText("Invalid input.");
-        return accountNameCheck.check() && initialBalanceCheck.check();
-    }
-
+    // ------------------------------------------------------------ gets/sets
     public String getAccountName() {
         return accountNameText.getText();
     }
@@ -91,6 +82,17 @@ public class CreateAccount extends JPanel {
 
     public JButton getCancelButton() {
         return cancelButton;
+    }
+
+    // ------------------------------------------------------------ public methods
+    public boolean validateFields() {
+        accountNameCheck.reset();
+        initialBalanceCheck.reset();
+        errorLabel.setText(" ");
+        if (!accountNameCheck.check()) errorLabel.setText("Invalid account name.");
+        if (!initialBalanceCheck.check()) errorLabel.setText("Invalid initial balance.");
+        if (!accountNameCheck.check() && !initialBalanceCheck.check()) errorLabel.setText("Invalid input.");
+        return accountNameCheck.check() && initialBalanceCheck.check();
     }
 
     public void reset() {

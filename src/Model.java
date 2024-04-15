@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
 public class Model {
+    // ------------------------------------------------------------ variable initialization
     public final static byte SAVINGS_ACCOUNT = 0;
     public final static byte AIRMILES_SAVINGS_ACCOUNT = 1;
 
@@ -13,10 +14,12 @@ public class Model {
     private ArrayList<Account> accounts;
     private int selectedAccount;
 
+    // ------------------------------------------------------------- constructor method
     public Model() {
         accounts = new ArrayList<>();
     }
 
+    // ------------------------------------------------------------- gets/sets
     public Account getSelectedAccount() {
         return accounts.get(selectedAccount);
     }
@@ -29,6 +32,7 @@ public class Model {
         return accountNames.toArray(new String[accountNames.size()]);
     }
 
+    // ------------------------------------------------------------- public methods
     public void selectAccount(int index) {
         selectedAccount = index;
     }

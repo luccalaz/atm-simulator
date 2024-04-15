@@ -1,6 +1,7 @@
 import java.awt.event.ActionEvent;
 
 public class Controller {
+    // ------------------------------------------------------------ variable initialization
     Model model;
     Window window;
     MainMenu mainMenu;
@@ -10,7 +11,9 @@ public class Controller {
     Deposit deposit;
     Withdraw withdraw;
 
+    // ------------------------------------------------------------ constructor method
     public Controller(Model myModel, Window myWindow, MainMenu myMainMenu, CreateAccount myCreateAccount, ChangeAccount myChangeAccount, DeleteAccount myDeleteAccount, Deposit myDeposit, Withdraw myWithdraw) {
+        // variable assignment
         model = myModel;
         window = myWindow;
         mainMenu = myMainMenu;
@@ -54,7 +57,7 @@ public class Controller {
             window.switchPanel(mainMenu);
         });
 
-         // set up change account
+        // set up change account
         changeAccount.addOkListener((ActionEvent e) -> {
             model.selectAccount(changeAccount.getSelectedAccount());
             mainMenu.update();
@@ -67,7 +70,7 @@ public class Controller {
             window.switchPanel(createAccount);
         });
 
-         // set up delete account
+        // set up delete account
         deleteAccount.addYesListener((ActionEvent e) -> {
             model.deleteAccount();
             if (model.getAccountNames().length == 0) {
@@ -82,7 +85,7 @@ public class Controller {
             window.switchPanel(mainMenu);
         });
 
-         // set up deposit
+        // set up deposit
         deposit.addOkListener((ActionEvent e) -> {
             if (deposit.validateFields()) {
                 model.getSelectedAccount().deposit(deposit.getAmount(), deposit.getDescription());
@@ -96,7 +99,7 @@ public class Controller {
             window.switchPanel(mainMenu);
         });
 
-         // set up withdraw
+        // set up withdraw
         withdraw.addOkListener((ActionEvent e) -> {
             if (withdraw.validateFields()) {
                 model.getSelectedAccount().withdraw(withdraw.getAmount(), withdraw.getDescription());

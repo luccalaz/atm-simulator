@@ -1,11 +1,11 @@
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionListener;
-
 import javax.swing.*;
 import net.miginfocom.swing.MigLayout;
 
 public class MainMenu extends JPanel {
+    // ------------------------------------------------------------ variable initialization
     private Model model;
     private JLabel selectedAccountLabel;
     private JLabel accountBalanceLabel;
@@ -17,6 +17,7 @@ public class MainMenu extends JPanel {
     private JButton withdrawButton;
     private JButton saveAndQuitButton;
 
+    // ------------------------------------------------------------ constructor method
     public MainMenu(Model myModel) {
         model = myModel;
         setLayout(new MigLayout("", "[grow][grow]", "[]20[]20[][][]"));
@@ -52,6 +53,7 @@ public class MainMenu extends JPanel {
         add(saveAndQuitButton, "cell 0 4, span, width 400, alignx center");
     }
 
+    // ------------------------------------------------------------ public methods
     public void update() {
         selectedAccountLabel.setText(model.getSelectedAccount().getName());
 

@@ -6,6 +6,7 @@ import javax.swing.*;
 import net.miginfocom.swing.MigLayout;
 
 public class Deposit extends JPanel {
+    // ------------------------------------------------------------ variable initialization
     private Model model;
     private JLabel pageLabel;
     private JLabel amountLabel;
@@ -15,10 +16,10 @@ public class Deposit extends JPanel {
     private JLabel errorLabel;
     private JButton okButton;
     private JButton cancelButton;
-
     private TextFieldValidator amountCheck;
     private TextFieldValidator descriptionCheck;
 
+    // ------------------------------------------------------------ constructor method
     public Deposit(Model myModel) {
         model = myModel;
         setLayout(new MigLayout("", "[][]", "[]10[][]10[][]10[][]"));
@@ -58,6 +59,16 @@ public class Deposit extends JPanel {
         descriptionCheck = new TextFieldValidator(descriptionText, "^[A-Za-z ]{1,27}$", Color.RED);
     }
 
+    // ------------------------------------------------------------ gets/sets
+    public double getAmount() {
+        return Double.parseDouble(amountText.getText());
+    }
+
+    public String getDescription() {
+        return descriptionText.getText();
+    }
+
+    // ------------------------------------------------------------ public methods
     public boolean validateFields() {
         errorLabel.setText(" ");
         amountCheck.reset();
@@ -74,14 +85,6 @@ public class Deposit extends JPanel {
         descriptionCheck.reset();
         amountText.setText("");
         descriptionText.setText("");
-    }
-
-    public double getAmount() {
-        return Double.parseDouble(amountText.getText());
-    }
-
-    public String getDescription() {
-        return descriptionText.getText();
     }
 
     public void addOkListener(ActionListener okListener) {
