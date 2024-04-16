@@ -64,7 +64,7 @@ public class CreateAccount extends JPanel {
 
         // Initialize validators
         accountNameCheck = new TextFieldValidator(accountNameText, "^[A-Za-z ]{1,20}$", Color.RED);
-        initialBalanceCheck = new TextFieldValidator(initialBalanceText, "^(?!0+(\\.00?)?$)\\d+(\\.\\d{1,2})?$", Color.RED);
+        initialBalanceCheck = new TextFieldValidator(initialBalanceText, "^(?!0+(\\.00?)?$)\\d{1,10}(\\.\\d{1,2})?$", Color.RED);
     }
 
     // ------------------------------------------------------------ gets/sets

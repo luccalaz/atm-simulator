@@ -55,8 +55,8 @@ public class Deposit extends JPanel {
         add(cancelButton, "cell 1 6, split 2");
 
         // initialize validators
-        amountCheck = new TextFieldValidator(amountText, "^(?!0+(\\.00?)?$)\\d+(\\.\\d{1,2})?$", Color.RED);
-        descriptionCheck = new TextFieldValidator(descriptionText, "^[A-Za-z ]{1,27}$", Color.RED);
+        amountCheck = new TextFieldValidator(amountText, "^(?!0+(\\.00?)?$)\\d{1,10}(\\.\\d{1,2})?$", Color.RED);
+        descriptionCheck = new TextFieldValidator(descriptionText, "^(?!\s+$)[A-Za-z ]{1,27}$", Color.RED);
     }
 
     // ------------------------------------------------------------ gets/sets
