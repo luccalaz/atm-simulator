@@ -1,9 +1,10 @@
 public class AirmilesSavingsAccount extends Account {
-    private String report;
+    // ------------------------------------------------------------ variable initialization
     private int airmiles;
 
-    public AirmilesSavingsAccount(String desc, double initialDeposit, double accountFee) {
-        super(desc, initialDeposit, accountFee);
+    // ------------------------------------------------------------ constructor method
+    public AirmilesSavingsAccount(String name, double initialDeposit, double accountFee) {
+        super(name, initialDeposit, accountFee);
         airmiles = 10;
         while (initialDeposit >= 30.00) {
             initialDeposit -= 30;
@@ -11,24 +12,17 @@ public class AirmilesSavingsAccount extends Account {
         }
     }
 
+    // ------------------------------------------------------------ gets/sets
+    public int getAirmiles() {
+        return airmiles;
+    }
+    
+    // ------------------------------------------------------------ public methods
     public void deposit(double amount, String description) {
         super.deposit(amount, description);
         while (amount >= 30.00) {
             amount -= 30;
             airmiles++;
         }
-    }
-
-    public int getAirmiles() {
-        return airmiles;
-    }
-
-    public String getReport() {
-        report = "Account Type: Airmiles Savings Account\n";
-        report += "Account Description: " + super.getDescription() + "\n";
-        report += "Current Airmiles: " + getAirmiles() + "\n";
-        report += "Current Balance: " + super.getBalance() + "\n";
-        report += super.getTransactions();
-        return report;
     }
 }
