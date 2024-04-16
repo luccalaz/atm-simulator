@@ -61,7 +61,7 @@ public class MainMenu extends JPanel {
             accountBalanceLabel.setText("$" + String.format("%,.2f", model.getSelectedAccount().getBalance()));
         } else if (model.getSelectedAccount() instanceof AirmilesSavingsAccount) {
             AirmilesSavingsAccount selectedAccount = (AirmilesSavingsAccount) model.getSelectedAccount();
-            accountBalanceLabel.setText(String.format("%,d", selectedAccount.getAirmiles()) + "  |  $" + String.format("%,.2f", model.getSelectedAccount().getBalance()));
+            accountBalanceLabel.setText("Miles: " + String.format("%,d", selectedAccount.getAirmiles()) + "  |  $" + String.format("%,.2f", model.getSelectedAccount().getBalance()));
         }
 
         transactionsArea.setText(model.getSelectedAccount().getTransactions());

@@ -108,7 +108,7 @@ public class Controller {
                     mainMenu.update();
                     window.switchPanel(mainMenu);
                 } else {
-                    withdraw.setErrorLabelTxt("Insufficient balance.");
+                    withdraw.setErrorLabelTxt("Insufficient balance ($" + String.format("%,.2f", model.getSelectedAccount().getBalance()) + ").");
                 }
             }
         });
